@@ -8,8 +8,8 @@ const bodyParser = require('sequelize');
 
 const mongoose = require("mongoose")
 
-require("../JS/models/Categoria")
-const Categoria = mongoose.model("categorias")
+require("./models/Usuarios")
+const Categoria = mongoose.model("usuarios")
 
 
 
@@ -30,6 +30,11 @@ const path = require("path")
 
 //Public
     app.use(express.static(path.join(__dirname, "public")))
+    
+    app.use((req, res, next) => {
+        console.log("Middleware On")
+        next()
+    })
 
 //Body Parser
 app.use(express.urlencoded({extended: false}));
@@ -50,17 +55,17 @@ app.get('/cadastrar', (req, res) =>{
     res.render("site/cadastrar")
 })
 //Post - Cadastro
-app.get('/cadastrar/novo', (req, res) =>{
-    const novaCategoria = {
+app.post('/cadastrar/novo', (req, res) =>{
+    const novoUsuario = {
         email: req.body.email,
         nome: req.body.nome,
         senha: req.body.senha,
         filial: req.body.nome
     }
-    new Categoria(novaCategoria).save().the(() =>{
-        console.logo("Cadastrado com sucesso!")
+    new Categoria(novoUsuario).save().then(() =>{
+        console.log("Cadastrado com sucesso!")
     }).catch((err) =>{
-        console.log("Erro ao se cadastrar")
+        console.log("Erro ao se cadastrar" + err)
     })
 })
 
