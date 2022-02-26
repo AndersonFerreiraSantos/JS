@@ -11,6 +11,9 @@ const Usuario = mongoose.model("usuarios")
 const session = require("express-session")
 const flash = require("connect-flash")
 const bcrypt = require("bcryptjs")
+const passport = require("passport")
+require("./config/auth")(passport)
+
 
 
 
@@ -22,6 +25,9 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 //Middleware
 app.use((req, res, next) =>{
@@ -42,6 +48,7 @@ const painel = require('./routes/painel');
 //Arquivos estaticos
 const path = require("path");
 const { redirect } = require('express/lib/response');
+const router = require('./routes/painel');
 
 //Public
     app.use(express.static(path.join(__dirname, "public")))
@@ -63,6 +70,19 @@ app.use(express.json());
 
 //------------------------------------------Rotas --------------------------------------
 //Rotas principais
+
+
+//Rota - Autenticação
+app.post('/login', (req, res, next) =>{
+    passport.authenticate("local", {
+        successRedirect: "/painel",
+        failureRedirect:"/Falha_entrar_em_painel",
+        failureFlash: true
+    })(req, res, next)
+})
+
+
+
 //Pagina de Login:
 app.get('/', (req, res) =>{
     res.render("site/index")
@@ -135,8 +155,6 @@ app.post('/cadastrar/novo', (req, res) =>{
 
 
 })
-
-
 
 //Painel
     app.use('/painel', painel)

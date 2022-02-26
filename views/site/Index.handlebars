@@ -18,21 +18,21 @@
 									<div class="text-center">
 										<img src="img/avatars/xerox.jpg" alt="Charles Hall" class="img-fluid rounded-circle" width="132" height="132" />
 									</div>
-									<form>
+									<form method="post" action="login">
 										<div class="mb-3">
 											<label class="form-label">Login</label>
-											<input class="form-control form-control-lg" type="email" name="email" placeholder="Digite seu login" />
+											<input class="form-control form-control-lg" type=text" name="nome" placeholder="Digite seu login" />
 										</div>
 										<div class="mb-3">
 											<label class="form-label">Senha</label>
-											<input class="form-control form-control-lg" type="password" name="password" placeholder="Digite sua senha" />
+											<input class="form-control form-control-lg" type="password" name="senha" placeholder="Digite sua senha" />
 											<small>
 											<a href="cadastrar">CADASTRAR</a>
 										</small>
 										</div>
 										<div class="text-center mt-3">
-											<a href="painel" class="btn btn-lg btn-primary">Entrar</a>
-											<!-- <button type="submit" class="btn btn-lg btn-primary">Sign in</button> -->
+											{{!-- <a href="painel" class="btn btn-lg btn-primary">Entrar</a> --}}
+											<button type="submit" class="btn btn-lg btn-primary">Sign in</button>
 										</div>
 									</form>
 								</div>
